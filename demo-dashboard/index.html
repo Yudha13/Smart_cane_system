@@ -23,12 +23,31 @@ main{min-width:0;padding:28px clamp(18px,3vw,42px) 40px;max-width:1600px;width:1
 
 .page-intro{margin:22px 0 14px}.page-intro h2{font-size:17px;margin:0}.page-intro p{font-size:11px;color:var(--muted);margin:6px 0 0}.page-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:14px}.stat-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}.stat-box{background:#1a2920;border:1px solid #293a2e;border-radius:12px;padding:14px}.stat-box small{color:var(--muted);font-size:10px}.stat-box strong{display:block;font-size:21px;margin:8px 0 3px}.toolbar{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.action{border:1px solid #425744;background:#273b2b;color:#d9edcc;padding:8px 12px;border-radius:8px;font-size:10px}.action:hover{background:#35503a}.action.secondary{background:#19271f;color:#c6d4c9;border-color:var(--line)}.action.danger{background:#3b2826;color:#efb0a7;border-color:#65403a}.field{display:grid;gap:6px;margin:12px 0}.field label{font-size:10px;color:var(--muted)}.field input,.field select,.field textarea{width:100%;background:#0f1913;color:var(--text);border:1px solid #35463a;border-radius:8px;padding:10px;font:inherit;font-size:11px}.field input[type=checkbox]{width:auto;accent-color:#a7d66d}.setting-row{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:13px 0;border-bottom:1px solid #29382f}.setting-row:last-child{border:0}.setting-row strong{font-size:11px;display:block}.setting-row small{font-size:9px;color:var(--muted);display:block;margin-top:4px}.setting-row input{accent-color:#a7d66d;width:16px;height:16px}.progress{height:7px;background:#29382f;border-radius:20px;overflow:hidden;margin:8px 0}.progress span{height:100%;display:block;background:var(--green);border-radius:20px}.empty-note{padding:22px;border:1px dashed #425744;border-radius:12px;color:var(--muted);font-size:11px;text-align:center}.table-actions{display:flex;gap:6px;align-items:center}.range-bar{height:8px;background:#29382f;border-radius:9px;overflow:hidden;margin-top:7px}.range-bar span{display:block;height:100%;background:var(--green)}.toast{position:fixed;right:20px;bottom:20px;background:#24382a;border:1px solid #56734e;color:#d9edcc;padding:12px 16px;border-radius:10px;z-index:20;font-size:11px;box-shadow:0 8px 30px #0007}.toggle{position:relative;width:38px;height:21px;display:inline-block}.toggle input{opacity:0;width:0;height:0}.toggle span{position:absolute;inset:0;background:#39463d;border-radius:30px;cursor:pointer}.toggle span:before{content:"";position:absolute;width:15px;height:15px;left:3px;top:3px;background:#dce8de;border-radius:50%;transition:.2s}.toggle input:checked+span{background:#6eaa4c}.toggle input:checked+span:before{transform:translateX(17px)}
 @media(max-width:900px){.stat-grid{grid-template-columns:repeat(2,1fr)}.page-grid{grid-template-columns:1fr}}@media(max-width:600px){.stat-grid{gap:8px}.stat-box{padding:11px}.stat-box strong{font-size:18px}.page-grid{gap:10px}.toolbar{width:100%}.toolbar>*{flex:1}}
+
+/* Mobile navigation hardening */
+.sidebar-close{display:none;border:1px solid var(--line);background:#19271f;color:var(--text);border-radius:9px;width:36px;height:36px;font-size:22px;line-height:1;align-items:center;justify-content:center;flex:none}
+.sidebar-backdrop{display:none}
+[hidden]{display:none!important}
+@media(max-width:700px){
+ .sidebar{left:0;right:auto;width:min(300px,86vw);height:100vh;height:100dvh;max-height:100dvh;overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;padding:18px 14px 24px;gap:22px;z-index:31;transform:translateX(-105%);transition:transform .22s ease}
+ .sidebar.open{left:0;transform:translateX(0)}
+ .sidebar .brand{padding:0 4px;justify-content:space-between}
+ .sidebar-close{display:inline-flex}
+ .nav{gap:6px}
+ .nav button{width:100%;min-height:46px;padding:12px 13px;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+ .sidebar-backdrop:not([hidden]){display:block;position:fixed;inset:0;z-index:30;width:100%;height:100%;border:0;border-radius:0;background:rgba(0,0,0,.62);padding:0}
+ body.menu-open{overflow:hidden;touch-action:none}
+ main{position:relative;z-index:1}
+ .mobile-menu{min-width:42px;min-height:42px;touch-action:manipulation}
+}
+@media(prefers-reduced-motion:reduce){.sidebar{transition:none}}
+
 </style>
 </head>
 <body>
 <div class="app">
 <aside class="sidebar" id="sidebar">
- <div class="brand"><div class="brand-mark">S</div><div><strong>SMART CANE</strong><small>FIELD INTELLIGENCE</small></div></div>
+ <div class="brand"><div class="brand-mark">S</div><div><strong>SMART CANE</strong><small>FIELD INTELLIGENCE</small></div><button class="sidebar-close" id="closeMenuBtn" type="button" aria-label="Tutup menu">×</button></div>
  <div><div class="nav-label">WORKSPACE</div><nav class="nav">
  <button class="active" data-view="overview"><span class="ico">▦</span>Overview</button>
  <button data-view="soil"><span class="ico">◉</span>Soil Monitoring</button>
@@ -40,6 +59,7 @@ main{min-width:0;padding:28px clamp(18px,3vw,42px) 40px;max-width:1600px;width:1
  <div><div class="nav-label">SYSTEM</div><nav class="nav"><button data-view="architecture"><span class="ico">⬡</span>System Overview</button><button data-view="settings"><span class="ico">⚙</span>Settings</button></nav></div>
  <div class="side-bottom"><div class="field-box"><small>ACTIVE LOCATION</small><strong>Demo Estate · Block A</strong><span>● Simulation environment</span></div></div>
 </aside>
+<button class="sidebar-backdrop" id="sidebarBackdrop" type="button" aria-label="Tutup menu" hidden></button>
 <main>
  <header class="topbar">
   <div class="topbar-left"><button class="mobile-menu" id="menuBtn" aria-label="Buka menu">☰</button><div><div class="eyebrow">TUESDAY, 17 NOVEMBER 2026 · FIELD OPERATIONS</div><h1 id="pageTitle">Field Overview</h1></div></div>
@@ -127,7 +147,20 @@ function drawChart(key){const d=series[key],w=700,h=230,left=42,right=12,top=15,
 drawChart('moisture');$('#metricSelect').addEventListener('change',e=>drawChart(e.target.value));
 function tick(){const d=new Date();$('#clock').textContent=new Intl.DateTimeFormat('id-ID',{timeZone:'Asia/Jakarta',hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false}).format(d)+' WIB';}
 tick();setInterval(tick,1000);
-$('#menuBtn').addEventListener('click',()=>$('#sidebar').classList.toggle('open'));
+function setMobileMenu(open){
+ const sidebar=$('#sidebar'),backdrop=$('#sidebarBackdrop'),menu=$('#menuBtn');
+ const isMobile=window.matchMedia('(max-width: 700px)').matches;
+ const shouldOpen=Boolean(open)&&isMobile;
+ sidebar.classList.toggle('open',shouldOpen);
+ document.body.classList.toggle('menu-open',shouldOpen);
+ backdrop.hidden=!shouldOpen;
+ menu.setAttribute('aria-expanded',String(shouldOpen));
+}
+$('#menuBtn').addEventListener('click',()=>setMobileMenu(!$('#sidebar').classList.contains('open')));
+$('#closeMenuBtn').addEventListener('click',()=>setMobileMenu(false));
+$('#sidebarBackdrop').addEventListener('click',()=>setMobileMenu(false));
+document.addEventListener('keydown',e=>{if(e.key==='Escape')setMobileMenu(false)});
+window.addEventListener('resize',()=>{if(!window.matchMedia('(max-width: 700px)').matches)setMobileMenu(false)});
 
 const pagePanel=$('#sectionPanel'),overviewPanel=$('#overviewContent');
 const pageTitles={overview:'Field Overview',soil:'Soil Monitoring',weather:'Weather Station',devices:'Device Network',history:'Data History',alerts:'Alerts & Events',architecture:'System Overview',settings:'Settings'};
@@ -179,7 +212,7 @@ function renderSettings(){let saved={};try{saved=JSON.parse(localStorage.getItem
 '<div class="toolbar" style="justify-content:flex-end;margin-top:16px"><button class="action secondary" id="resetSettings">Reset defaults</button><button class="action" id="saveSettings">Save settings</button></div><p class="tiny" id="settingsFeedback" style="text-align:right">Settings belum disimpan.</p>'}
 function csvDownload(name,rows){const csv=rows.map(r=>r.map(v=>'"'+String(v??'').replace(/"/g,'""')+'"').join(',')).join('\n');const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'}));a.download=name;a.click();URL.revokeObjectURL(a.href)}
 function showToast(msg){const t=document.createElement('div');t.className='toast';t.textContent=msg;document.body.appendChild(t);setTimeout(()=>t.remove(),2200)}
-function renderPage(view){const v=pageTitles[view]?view:'overview';$('#pageTitle').textContent=pageTitles[v];document.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('active',b.dataset.view===v));$('#sidebar').classList.remove('open');overviewPanel.hidden=v!=='overview';pagePanel.hidden=v==='overview';if(v==='overview')return;const render={soil:renderSoil,weather:renderWeather,devices:renderDevices,history:renderHistory,alerts:renderAlerts,architecture:renderArchitecture,settings:renderSettings};pagePanel.innerHTML=render[v]();if(v==='soil'){paintSoilTable();$('#soilZone').addEventListener('change',paintSoilTable);$('#soilStatus').addEventListener('change',paintSoilTable)}if(v==='history'){paintHistory();$('#historyDevice').addEventListener('change',paintHistory);$('#historyExport').addEventListener('click',()=>csvDownload('smart-cane-history.csv',[['Timestamp','Device','Zone','Moisture','Temperature','pH','EC','Status'],...demoNodes.map((n,i)=>['2026-11-17 08:'+String(58-i*2).padStart(2,'0')+':42 WIB',n.id,n.zone,n.m,n.t,n.ph,n.ec,n.status])]))}if(v==='devices'){$('#refreshDevices').addEventListener('click',()=>showToast('Status perangkat demo diperbarui'));document.querySelectorAll('.node-detail').forEach(b=>b.addEventListener('click',()=>{const n=demoNodes.find(x=>x.id===b.dataset.node);$('#deviceFeedback').textContent=n.id+' · Zone '+n.zone+' · '+n.status+' · Battery '+n.battery+' · RSSI '+n.rssi+' · Last seen '+n.last;}))}if(v==='alerts'){document.querySelectorAll('.ack').forEach(b=>b.addEventListener('click',()=>{b.closest('.alert').remove();updateAlertCount()}));$('#resolveAll').addEventListener('click',()=>{ $('#alertRows').innerHTML='<div class="empty-note">Tidak ada alert aktif. Semua alert telah di-acknowledge pada sesi demo ini.</div>';updateAlertCount()})}if(v==='settings'){const saved=JSON.parse(localStorage.getItem('sc-demo-settings')||'{}');['timezone','units','refreshRate','sampleInterval','syncMode'].forEach(k=>{if(saved[k]&&$('#'+k))$('#'+k).value=saved[k]});$('#saveSettings').addEventListener('click',()=>{const keys=['farmName','timezone','units','refreshRate','sampleInterval','syncMode','nodeCount','notifyCritical','notifySensor','notifySync','compactMode'];const out={};keys.forEach(k=>{const e=$('#'+k);if(e)out[k]=e.type==='checkbox'?e.checked:e.value});localStorage.setItem('sc-demo-settings',JSON.stringify(out));$('#settingsFeedback').textContent='Tersimpan di browser ini · '+new Date().toLocaleTimeString('id-ID');showToast('Pengaturan demo berhasil disimpan')});$('#resetSettings').addEventListener('click',()=>{localStorage.removeItem('sc-demo-settings');renderPage('settings');showToast('Pengaturan demo dikembalikan ke nilai awal')})}}
+function renderPage(view){const v=pageTitles[view]?view:'overview';$('#pageTitle').textContent=pageTitles[v];document.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('active',b.dataset.view===v));setMobileMenu(false);overviewPanel.hidden=v!=='overview';pagePanel.hidden=v==='overview';if(v==='overview')return;const render={soil:renderSoil,weather:renderWeather,devices:renderDevices,history:renderHistory,alerts:renderAlerts,architecture:renderArchitecture,settings:renderSettings};pagePanel.innerHTML=render[v]();if(v==='soil'){paintSoilTable();$('#soilZone').addEventListener('change',paintSoilTable);$('#soilStatus').addEventListener('change',paintSoilTable)}if(v==='history'){paintHistory();$('#historyDevice').addEventListener('change',paintHistory);$('#historyExport').addEventListener('click',()=>csvDownload('smart-cane-history.csv',[['Timestamp','Device','Zone','Moisture','Temperature','pH','EC','Status'],...demoNodes.map((n,i)=>['2026-11-17 08:'+String(58-i*2).padStart(2,'0')+':42 WIB',n.id,n.zone,n.m,n.t,n.ph,n.ec,n.status])]))}if(v==='devices'){$('#refreshDevices').addEventListener('click',()=>showToast('Status perangkat demo diperbarui'));document.querySelectorAll('.node-detail').forEach(b=>b.addEventListener('click',()=>{const n=demoNodes.find(x=>x.id===b.dataset.node);$('#deviceFeedback').textContent=n.id+' · Zone '+n.zone+' · '+n.status+' · Battery '+n.battery+' · RSSI '+n.rssi+' · Last seen '+n.last;}))}if(v==='alerts'){document.querySelectorAll('.ack').forEach(b=>b.addEventListener('click',()=>{b.closest('.alert').remove();updateAlertCount()}));$('#resolveAll').addEventListener('click',()=>{ $('#alertRows').innerHTML='<div class="empty-note">Tidak ada alert aktif. Semua alert telah di-acknowledge pada sesi demo ini.</div>';updateAlertCount()})}if(v==='settings'){const saved=JSON.parse(localStorage.getItem('sc-demo-settings')||'{}');['timezone','units','refreshRate','sampleInterval','syncMode'].forEach(k=>{if(saved[k]&&$('#'+k))$('#'+k).value=saved[k]});$('#saveSettings').addEventListener('click',()=>{const keys=['farmName','timezone','units','refreshRate','sampleInterval','syncMode','nodeCount','notifyCritical','notifySensor','notifySync','compactMode'];const out={};keys.forEach(k=>{const e=$('#'+k);if(e)out[k]=e.type==='checkbox'?e.checked:e.value});localStorage.setItem('sc-demo-settings',JSON.stringify(out));$('#settingsFeedback').textContent='Tersimpan di browser ini · '+new Date().toLocaleTimeString('id-ID');showToast('Pengaturan demo berhasil disimpan')});$('#resetSettings').addEventListener('click',()=>{localStorage.removeItem('sc-demo-settings');renderPage('settings');showToast('Pengaturan demo dikembalikan ke nilai awal')})}}
 function updateAlertCount(){const n=$('#alertRows .alert')?.length||0;$('#openAlerts').textContent=n}
 document.querySelectorAll('.nav button').forEach(b=>b.addEventListener('click',()=>renderPage(b.dataset.view)));
 $('#menuBtn').addEventListener('click',()=>$('#sidebar').classList.toggle('open'));
