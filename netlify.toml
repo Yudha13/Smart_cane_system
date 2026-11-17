@@ -1,0 +1,8 @@
+# Netlify configuration for the static dashboard preview
+[build]
+  base = "demo-dashboard"
+  publish = "."
+  command = ""
+
+[build.environment]
+  NODE_VERSION = "20"
